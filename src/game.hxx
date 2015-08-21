@@ -13,5 +13,6 @@ public:
     void draw() override;
 private:
     sf::Text txt;
+    sf::Sprite spr;
 };
 
