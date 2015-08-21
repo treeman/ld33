@@ -8,6 +8,10 @@
 #include "statestack.hxx"
 #include "log.hxx"
 
+// EZ!
+#define L_ (Locator::get_logger())
+#define D_ (Locator::get_debug())
+
 // Static accessor class for global functions, singletons etc
 // purely for convenience!
 class Locator {

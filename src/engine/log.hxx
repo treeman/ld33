@@ -6,11 +6,7 @@
 #include <string>
 using namespace std;
 
-#include "locator.hxx"
 #include "fmt.hxx"
-
-// EZ!
-#define L_ (Locator::get_logger())
 
 class Logger {
 public:

@@ -5,8 +5,6 @@
 #include <vector>
 using namespace std;
 
-#define D_ (Locator::get_debug())
-
 // Collect debug values available for printing or stuff.
 class Debug {
 public:

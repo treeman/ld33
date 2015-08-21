@@ -14,5 +14,6 @@ public:
 private:
     sf::Text txt;
     sf::Sprite spr;
+    sf::Sound snd;
 };
 

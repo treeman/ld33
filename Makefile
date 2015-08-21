@@ -3,7 +3,7 @@ export OBJDIR = obj
 export BINDIR = bin
 
 export CC = g++
-export LIBS = -lX11 -lGL -lXrandr -lfreetype -lopenal -lpthread -lsfml-graphics -lsfml-window -lsfml-system -llua
+export LIBS = -lX11 -lGL -lXrandr -lfreetype -lopenal -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -llua
 
 export CFLAGS = -std=c++1y -Wall -I$(SRCDIR)
 
