@@ -1,0 +1,6 @@
+/tags
+*.o
+*.d
+*~
+*.swp
+/bin/ld33
