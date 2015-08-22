@@ -13,10 +13,25 @@ public:
     void handle_input(const sf::Event &e) override;
     void update(const sf::Time &dt) override;
     void draw() override;
-private:
+
     sf::Text txt;
     World world;
-    sf::RectangleShape gui_back;
-    vector<Statusbar> bars;
+    sf::Sprite base_gui;
+    sf::Sprite health_bar;
+
+    void set_monster_health(float frac);
 };
+
+// Weapons:
+// 1. Eye lazer
+// 2. Left whirler
+// 3. Right whirler
+// 4. Bouncer
+// 5. Rockets
+
+// Powerups:
+// 1. Bullet masher :w
+
+// Status:
+// 1. Life
 

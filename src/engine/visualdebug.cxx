@@ -4,7 +4,7 @@
 
 VisualDebug::VisualDebug(IPoint p) : pos(p) {
     txt = create_txt("consola.ttf", 12);
-    txt.setColor(sf::Color::White);
+    txt.setColor(sf::Color::Black);
 }
 
 void VisualDebug::log() {

@@ -7,27 +7,9 @@
 
 Game::Game(sf::RenderWindow &w) : State(w), world(w) {
     txt = create_txt("consola.ttf", 14);
-
-    // Gui
-    const int gui_height = 140;
-    gui_back.setSize(FPoint(800, gui_height));
-    gui_back.setPosition(0, 600 - gui_height);
-    gui_back.setFillColor(sf::Color(0xFFF1BAFF));
-
-    const int left_x = 380;
-    const int right_x = 550;
-    const int top_y = 475;
-    const int txt_h = 25;
-
-    vector<string> left = { "BRAINZ", "Comfort", "Bladder", "Energy" };
-    for (size_t i = 0; i < left.size(); ++i) {
-        bars.push_back(Statusbar(left[i], FPoint(left_x, top_y + i * txt_h)));
-    }
-
-    vector<string> right = { "Fun", "Social", "Hygiene", "Environment" };
-    for (size_t i = 0; i < right.size(); ++i) {
-        bars.push_back(Statusbar(right[i], FPoint(right_x, top_y + i * txt_h)));
-    }
+    base_gui = create_sprite("base_gui.png");
+    health_bar = create_sprite("health.png");
+    health_bar.setPosition(332, 18);
 }
 
 void Game::handle_input(const sf::Event &e) {
@@ -37,6 +19,7 @@ void Game::handle_input(const sf::Event &e) {
             break;
         default: break;
     }
+    world.handle_input(e);
 }
 
 void Game::update(const sf::Time &dt) {
@@ -45,11 +28,12 @@ void Game::update(const sf::Time &dt) {
 
 void Game::draw() {
     world.draw();
+    window.draw(base_gui);
+    window.draw(health_bar);
+}
 
-    // Draw gui
-    window.draw(gui_back);
-    for (auto x = bars.begin(); x != bars.end(); ++x) {
-        x->draw(window);
-    }
+void Game::set_monster_health(float frac) {
+    // How to set % of health ;)
+    health_bar.setScale(frac, 1);
 }
 

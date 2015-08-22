@@ -25,6 +25,7 @@ Engine::Engine() {
 
     fps_txt = create_txt("lucon.ttf", 20);
     fps_txt.setPosition(5, 3);
+    fps_txt.setColor(sf::Color::Black);
 
     fps_frame_count = 0;
     fps = 0;
