@@ -52,7 +52,7 @@ void Hero::fire() {
     if (fire_delay.getElapsedTime().asSeconds() > 0.02) {
         string path = "cbullet.png";
         vector<Bullet*> bullets = {
-            new VelBullet(path, 800, FPoint(0, -1), FPoint(42, 10)),
+            new VelBullet(path, 800, FPoint(0, -1), FPoint(42, 10), true),
         };
         fire_bullets(bullets);
         fire_delay.restart();

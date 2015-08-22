@@ -10,7 +10,10 @@ const int height = 305;
 Monster::Monster(World &world) : world(world) {
     spr = create_sprite("monster_main.png");
 
+    // Basic one
     //bounds.add_rect(0, 0, 332, 305);
+
+    // Real one
     bounds.add_rect(68, 74, 273, 250);
     bounds.add_rect(47, 248, 148, 287);
     bounds.add_rect(142, 250, 161, 275);
@@ -26,6 +29,7 @@ Monster::Monster(World &world) : world(world) {
     bounds.add_rect(306, 164, 312, 200);
     bounds.add_rect(30, 156, 51, 172);
     bounds.add_rect(35, 172, 53, 189);
+    bounds.add_circle(0, 0, 20);
 }
 
 void Monster::handle_input(const sf::Event &e) {
@@ -53,8 +57,9 @@ void Monster::set_pos(FPoint _pos) {
 }
 
 void Monster::move(FPoint dv) {
-    pos = pos + dv;
-    set_pos(pos);
+    set_pos(pos + dv);
+
+    // Should only move this... T.T
     for (auto s : spawners) {
         s->move(dv);
     }
@@ -78,20 +83,25 @@ void Monster::draw(sf::RenderWindow &w) {
     bounds.draw(w);
 }
 
+bool Monster::is_collision(shared_ptr<BaseBounds> b) {
+    //return false;
+    return bounds.intersects(b);
+}
+
 void Monster::fire_bullets(vector<Bullet*> bullets) {
     for (auto x = bullets.begin(); x != bullets.end(); ++x) {
         shared_ptr<Bullet> b(*x);
-        b->pos = b->pos + pos;
         world.add_bullet(b);
     }
 }
 
 void Monster::fire_eyes() {
+    D_.tmp(fmt("pos: %f, %f", pos.x, pos.y));
     if (eyes_fire_delay.getElapsedTime().asSeconds() > 0.05) {
         string path = "cbullet.png";
         vector<Bullet*> bullets = {
-            new VelBullet(path, 500, FPoint(1, 4), FPoint(115, 165)),
-            new VelBullet(path, 500, FPoint(1, 2), FPoint(185, 148)),
+            new VelBullet(path, 500, FPoint(1, 4), FPoint(115, 165) + pos, false),
+            new VelBullet(path, 500, FPoint(1, 2), FPoint(185, 148) + pos, false),
         };
         fire_bullets(bullets);
 
@@ -124,7 +134,8 @@ void Monster::fire_right() {
         new FunBullet(path, 50, FPoint(292, 190) + pos,
             // theta = angle vel * time
             [a, b, av](float t) { return a * cos(av * t) * exp(b * av * t); },
-            [a, b, av](float t) { return a * sin(av * t) * exp(b * av * t); })
+            [a, b, av](float t) { return a * sin(av * t) * exp(b * av * t); },
+            false)
     };
     fire_bullets(bullets);
 }

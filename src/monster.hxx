@@ -18,6 +18,8 @@ public:
     void handle_input(const sf::Event &e);
     void update(const sf::Time &dt);
     void draw(sf::RenderWindow &w);
+
+    bool is_collision(shared_ptr<BaseBounds> bounds);
 private:
     sf::Sprite spr;
     IPoint move_dir;

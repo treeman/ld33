@@ -13,7 +13,8 @@ void Bulletspawner::update(const sf::Time &) {
                 "cbullet.png", // TODO fix
                 it->speed,
                 angle2dir(it->angle),
-                pos
+                pos,
+                false // TODO only targets hero
             )));
         }
     }

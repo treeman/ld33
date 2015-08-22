@@ -18,31 +18,39 @@ SprBounds get_bounds(string path) {
     return res;
 }
 
-Bullet::Bullet(string id, FPoint start) : pos(start), dead(false)
+Bullet::Bullet(string id, FPoint start, bool hit_monster) : pos(start), dead(false),
+    hit_monster(hit_monster)
 {
     SprBounds sb = get_bounds(id);
     spr = sb.spr;
     bounds = sb.bounds;
+    bounds->set_pos(start.x, start.y);
     assert(bounds != nullptr);
 }
 
 void Bullet::draw(sf::RenderWindow &w) {
+    D_.set_key("bullet", fmt("%f, %f", pos.x, pos.y));
+    Circle *c = dynamic_cast<Circle*>(bounds.get());
+    D_.set_key("bounds", fmt("%f, %f", c->x, c->y));
     spr.setPosition(pos);
     w.draw(spr);
-    bounds->draw(w, pos);
+    bounds->draw(w);
 }
 
-VelBullet::VelBullet(string path, float speed, FPoint dir, FPoint start) : Bullet(path, start),
-    speed(speed), dir(dir) {
-}
+VelBullet::VelBullet(string path, float speed, FPoint dir, FPoint start, bool hit_monster) :
+    Bullet(path, start, hit_monster), speed(speed), dir(dir) { }
 
 void VelBullet::update(const sf::Time &dt) {
     FPoint dv = dir.normalize() * speed * dt.asSeconds();
+    //bounds->move(dv.x, dv.y);
     pos = pos + dv;
+    bounds->set_pos(pos.x, pos.y);
 }
 
 FunBullet::FunBullet(string path, float speed, FPoint start, function<float(float)> xf,
-    function<float(float)> yf) : Bullet(path, start), speed(speed), start(start),
+        function<float(float)> yf, bool hit_monster) :
+    Bullet(path, start, hit_monster),
+    speed(speed), start(start),
     xf(xf), yf(yf)
 {
 
@@ -51,7 +59,10 @@ FunBullet::FunBullet(string path, float speed, FPoint start, function<float(floa
 void FunBullet::update(const sf::Time &) {
     float t = elapsed.getElapsedTime().asSeconds();
     pos = start;
-    pos.x += xf(t);
-    pos.y += yf(t);
+    float dx = xf(t);
+    float dy = yf(t);
+    pos.x += dx;
+    pos.y += dy;
+    bounds->set_pos(pos.x, pos.y);
 }
 

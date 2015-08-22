@@ -31,6 +31,16 @@ void World::update(const sf::Time &dt) {
         FPoint p = x->pos;
         if (p.x < -10 || p.x > 810) x->dead = true;
         if (p.y < -10 || p.y > 810) x->dead = true;
+
+        if (x->hit_monster) {
+            if (monster->is_collision(x->bounds)) {
+                L_("Die you fantastic thing!!!\n");
+                x->dead = true;
+            }
+        }
+        else {
+
+        }
     }
     // Need to kill of things
     spawners.erase(remove_if(spawners.begin(),
