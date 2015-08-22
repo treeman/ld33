@@ -2,8 +2,8 @@
 #include "hero.hxx"
 
 const float move_speed = 300;
-//const int width = 332;
-//const int height = 305;
+const int width = 85;
+const int height = 87;
 
 Hero::Hero() {
     spr = create_sprite("hero.png");
@@ -12,13 +12,34 @@ Hero::Hero() {
 void Hero::set_pos(FPoint _pos) {
     pos = _pos;
     // TODO better hitbox
-    //if (pos.x < 0) pos.x = 0;
-    //if (pos.x + width > 800) pos.x = 800 - width;
-    //if (pos.y < 0) pos.y = 0;
-    //if (pos.y + height > 500) pos.y = 500 - height;
+    if (pos.x < 0) pos.x = 0;
+    if (pos.x + width > 800) pos.x = 800 - width;
+    if (pos.y < 200) pos.y = 200;
+    if (pos.y + height > 600) pos.y = 600 - height;
 
     D_.tmp(fmt("hero pos: %f, %f", pos.x, pos.y));
     spr.setPosition(pos);
+}
+
+void Hero::move_left() {
+    move_dir.x = -1;
+}
+void Hero::move_right() {
+    move_dir.x = 1;
+}
+void Hero::move_up() {
+    move_dir.y = -1;
+}
+void Hero::move_down() {
+    move_dir.y = 1;
+}
+void Hero::move_stop() {
+    move_dir.x = 0;
+    move_dir.y = 0;
+}
+
+void Hero::fire() {
+
 }
 
 void Hero::update(const sf::Time &dt) {

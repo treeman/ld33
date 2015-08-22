@@ -20,7 +20,7 @@ public:
 
     void add_bullet(shared_ptr<Bullet> bullet);
     void add_spawner(shared_ptr<Bulletspawner> spawner);
-private:
+
     sf::RenderWindow &window;
     shared_ptr<Monster> monster;
     vector<shared_ptr<Hero>> heroes;

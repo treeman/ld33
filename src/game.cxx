@@ -24,6 +24,17 @@ void Game::handle_input(const sf::Event &e) {
 
 void Game::update(const sf::Time &dt) {
     world.update(dt);
+
+    // Lawl
+    // TODO fix
+    // Update hero handling!
+    shared_ptr<Hero> hero = world.heroes[0];
+    hero->move_stop();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) hero->move_left();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) hero->move_right();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) hero->move_up();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) hero->move_down();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)) hero->fire();
 }
 
 void Game::draw() {
