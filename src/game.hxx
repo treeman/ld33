@@ -1,6 +1,8 @@
 #pragma once
 
 #include "engine/state.hxx"
+#include "world.hxx"
+#include "statusbar.hxx"
 
 class Game : public State {
 public:
@@ -13,7 +15,8 @@ public:
     void draw() override;
 private:
     sf::Text txt;
-    sf::Sprite spr;
-    sf::Sound snd;
+    World world;
+    sf::RectangleShape gui_back;
+    vector<Statusbar> bars;
 };
 

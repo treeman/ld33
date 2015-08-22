@@ -62,38 +62,38 @@ void Engine::run() {
                 default: break;
             }
             state->handle_input(e);
-
-            sf::Time dt = clock.restart();
-
-            // Simply update each second,
-            // no need for anything more sophisticated.
-            ++fps_frame_count;
-            const float fps_time = fps_timer.getElapsedTime().asSeconds();
-            if (fps_time >= 1.0) {
-                fps = fps_frame_count / fps_time;
-                fps_frame_count = 0;
-                fps_timer.restart();
-            }
-
-            // Debug mouse position
-            auto mp = sf::Mouse::getPosition(*window);
-            D_.set_key("mpos", to_string(mp.x) + ", " + to_string(mp.y));
-
-            // Update shit
-            state->update(dt);
-
-            // Draw things!
-            window->clear();
-            state->draw();
-
-            // Debugger logs and possibly draws last.
-            Locator::get_debug().update();
-
-            fps_txt.setString(to_string((int)fps));
-            window->draw(fps_txt);
-
-            window->display();
         }
+
+        sf::Time dt = clock.restart();
+
+        // Simply update each second,
+        // no need for anything more sophisticated.
+        ++fps_frame_count;
+        const float fps_time = fps_timer.getElapsedTime().asSeconds();
+        if (fps_time >= 1.0) {
+            fps = fps_frame_count / fps_time;
+            fps_frame_count = 0;
+            fps_timer.restart();
+        }
+
+        // Debug mouse position
+        auto mp = sf::Mouse::getPosition(*window);
+        D_.set_key("mpos", to_string(mp.x) + ", " + to_string(mp.y));
+
+        // Update shit
+        state->update(dt);
+
+        // Draw things!
+        window->clear();
+        state->draw();
+
+        // Debugger logs and possibly draws last.
+        Locator::get_debug().update();
+
+        fps_txt.setString(to_string((int)fps));
+        window->draw(fps_txt);
+
+        window->display();
     }
 }
 
