@@ -2,17 +2,28 @@
 
 #include "engine/butler.hxx"
 #include "engine/pos.hxx"
+#include "bounds.hxx"
+
+// Collect bounds and sprites in one
+struct SprBounds {
+    sf::Sprite spr;
+    shared_ptr<BaseBounds> bounds;
+};
+
+void init_bounds(); // XXX smelly!
+SprBounds get_bounds(string id);
 
 class Bullet {
 public:
-    Bullet(string path, FPoint start);
+    Bullet(string id, FPoint start);
     virtual ~Bullet() {}
 
     virtual void update(const sf::Time &dt) = 0;
     void draw(sf::RenderWindow &w);
 
-    sf::Sprite spr;
     FPoint pos;
+    sf::Sprite spr;
+    shared_ptr<BaseBounds> bounds;
 
     bool dead;
 };

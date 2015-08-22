@@ -1,11 +1,13 @@
 #include "engine/locator.hxx"
 #include "hero.hxx"
+#include "bullet.hxx"
+#include "world.hxx"
 
 const float move_speed = 300;
 const int width = 85;
 const int height = 87;
 
-Hero::Hero() {
+Hero::Hero(World &world) : world(world) {
     spr = create_sprite("hero.png");
 }
 
@@ -38,17 +40,26 @@ void Hero::move_stop() {
     move_dir.y = 0;
 }
 
-void Hero::fire() {
+void Hero::fire_bullets(vector<Bullet*> bullets) {
+    for (auto x : bullets) {
+        shared_ptr<Bullet> b(x);
+        b->pos = b->pos + pos;
+        world.add_bullet(b);
+    }
+}
 
+void Hero::fire() {
+    if (fire_delay.getElapsedTime().asSeconds() > 0.02) {
+        string path = "cbullet.png";
+        vector<Bullet*> bullets = {
+            new VelBullet(path, 800, FPoint(0, -1), FPoint(42, 10)),
+        };
+        fire_bullets(bullets);
+        fire_delay.restart();
+    }
 }
 
 void Hero::update(const sf::Time &dt) {
-    //move_dir = IPoint();
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) move_dir.x -= 1;
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) move_dir.x += 1;
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) move_dir.y -= 1;
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) move_dir.y += 1;
-
     FPoint dv = FPoint(move_dir).normalize() * move_speed * dt.asSeconds();
     pos = pos + dv;
     set_pos(pos);

@@ -9,6 +9,23 @@ const int height = 305;
 
 Monster::Monster(World &world) : world(world) {
     spr = create_sprite("monster_main.png");
+
+    //bounds.add_rect(0, 0, 332, 305);
+    bounds.add_rect(68, 74, 273, 250);
+    bounds.add_rect(47, 248, 148, 287);
+    bounds.add_rect(142, 250, 161, 275);
+    bounds.add_rect(156, 256, 171, 269);
+    bounds.add_rect(157, 248, 225, 258);
+    bounds.add_rect(271, 142, 306, 223);
+    bounds.add_rect(274, 224, 288, 241);
+    bounds.add_rect(274, 224, 297, 232);
+    bounds.add_rect(51, 76, 67, 248);
+    bounds.add_rect(273, 123, 296, 144);
+    bounds.add_rect(106, 6, 285, 77);
+    bounds.add_rect(24, 118, 52, 156);
+    bounds.add_rect(306, 164, 312, 200);
+    bounds.add_rect(30, 156, 51, 172);
+    bounds.add_rect(35, 172, 53, 189);
 }
 
 void Monster::handle_input(const sf::Event &e) {
@@ -32,6 +49,7 @@ void Monster::set_pos(FPoint _pos) {
 
     D_.tmp(fmt("monster pos: %f, %f", pos.x, pos.y));
     spr.setPosition(pos);
+    bounds.set_pos(pos);
 }
 
 void Monster::move(FPoint dv) {
@@ -57,6 +75,7 @@ void Monster::update(const sf::Time &dt) {
 
 void Monster::draw(sf::RenderWindow &w) {
     w.draw(spr);
+    bounds.draw(w);
 }
 
 void Monster::fire_bullets(vector<Bullet*> bullets) {

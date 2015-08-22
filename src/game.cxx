@@ -4,12 +4,14 @@
 #include "engine/pos.hxx"
 #include "engine/locator.hxx"
 #include "game.hxx"
+#include "bullet.hxx"
 
 Game::Game(sf::RenderWindow &w) : State(w), world(w) {
     txt = create_txt("consola.ttf", 14);
     base_gui = create_sprite("base_gui.png");
     health_bar = create_sprite("health.png");
     health_bar.setPosition(332, 18);
+    init_bounds();
 }
 
 void Game::handle_input(const sf::Event &e) {

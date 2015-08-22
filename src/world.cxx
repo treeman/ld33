@@ -9,7 +9,7 @@ const int y_tiles = 15;
 
 World::World(sf::RenderWindow &w) : window(w) {
     monster.reset(new Monster(*this));
-    auto hero = shared_ptr<Hero>(new Hero());
+    auto hero = shared_ptr<Hero>(new Hero(*this));
     hero->set_pos(FPoint(380, 510));
     heroes.push_back(hero);
 }

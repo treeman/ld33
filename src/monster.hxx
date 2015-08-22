@@ -4,6 +4,7 @@
 #include "engine/pos.hxx"
 #include "bullet.hxx"
 #include "bulletspawner.hxx"
+#include "bounds.hxx"
 
 class World;
 
@@ -31,5 +32,7 @@ private:
 
     void fire_left();
     void fire_right();
+
+    Bounds bounds;
 };
 
