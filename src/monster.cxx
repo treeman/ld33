@@ -43,6 +43,9 @@ Monster::Monster(World &world) : world(world) {
     j.setPosition(64, 535); jf.setPosition(64, 535);
     k.setPosition(105, 535); kf.setPosition(105, 535);
     l.setPosition(150, 535); lf.setPosition(150, 535);
+
+    die_snd = create_sound("Explosion23.wav");
+    shoot_snd = create_sound("Laser_Shoot21.wav");
 }
 
 void Monster::handle_input(const sf::Event &e) {
@@ -119,6 +122,7 @@ void Monster::fire_bullets(vector<Bullet*> bullets) {
 void Monster::fire_eyes() {
     D_.tmp(fmt("pos: %f, %f", pos.x, pos.y));
     if (can_fire_eyes()) {
+        shoot_snd.play();
         string path = "ebullet.png";
         const int diff = 25;
         const float r1 = rand_int(-diff, diff) + 70;
@@ -137,6 +141,7 @@ bool Monster::can_fire_eyes() {
 
 void Monster::fire_left() {
     if (can_fire_left()) {
+        shoot_snd.play();
         shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "nbullet.png"));
         spawner->set_pos(FPoint(140, 196) + pos);
         const int num = 6;
@@ -158,6 +163,7 @@ bool Monster::can_fire_left() {
 
 void Monster::fire_right() {
     if (can_fire_right()) {
+        shoot_snd.play();
         shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "nbullet.png"));
         spawner->set_pos(FPoint(160, 190) + pos);
         const int num = 30;
@@ -192,6 +198,7 @@ bool Monster::can_fire_right() {
 
 void Monster::fire_mid() {
     if (can_fire_mid()) {
+        shoot_snd.play();
         shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "rocket.png"));
         spawner->set_pos(FPoint(171, 226) + pos);
         const int num = 3;
@@ -210,6 +217,7 @@ bool Monster::can_fire_mid() {
 void Monster::take_damage(float damage) {
     monster_life -= damage;
     if (monster_life < 0) {
+        die_snd.play();
         monster_life = 0;
         is_dead = true;
     }

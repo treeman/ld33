@@ -59,5 +59,7 @@ public:
     const int height = 305;
 
     sf::Sprite h, hf, j, jf, k, kf, l, lf;
+
+    sf::Sound die_snd, shoot_snd;
 };
 

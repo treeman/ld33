@@ -50,5 +50,7 @@ public:
     sf::Sprite shield_status;
     sf::Sprite shield_status_loading;
     sf::Sprite shield;
+
+    sf::Sound die_snd, shield_snd;
 };
 

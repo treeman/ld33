@@ -29,6 +29,9 @@ Hero::Hero(World &world) : proximity_bound(48, 48, 150), proximity_rect(18, 18, 
     shield_status = create_sprite("shieldstatus.png");
     shield_status_loading = create_sprite("shieldstatus_loading.png");
     shield = create_sprite("shield.png");
+
+    die_snd = create_sound("Explosion2.wav");
+    shield_snd = create_sound("explosion1.wav");
 }
 
 void Hero::set_pos(FPoint _pos) {
@@ -152,11 +155,13 @@ bool Hero::is_collision(shared_ptr<BaseBounds> b) {
 
 void Hero::hit() {
     if (shield_load >= 1) {
+        shield_snd.play();
         shield_load = 0;
     }
     else {
         life -= 1;
         if (life <= 0) {
+            die_snd.play();
             is_dead = true;
             life = 0;
         }

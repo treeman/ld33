@@ -33,5 +33,7 @@ public:
     sf::Sprite game_over;
     sf::Clock game_over_clock;
     void restart();
+
+    sf::Sound vic_snd;
 };
 

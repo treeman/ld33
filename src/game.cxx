@@ -12,8 +12,8 @@ Game::Game(sf::RenderWindow &w, int _heroes) : State(w), world(w, _heroes), hero
     //base_gui = create_sprite("base_gui.png");
     health_gui = create_sprite("health_gui.png");
     health_bar = create_sprite("health.png");
-    health_gui.setPosition(332, 18);
-    health_bar.setPosition(332, 18);
+    health_gui.setPosition(432, 18);
+    health_bar.setPosition(432, 18);
 
     init_bounds();
     for (auto h : world.heroes) {
@@ -24,6 +24,8 @@ Game::Game(sf::RenderWindow &w, int _heroes) : State(w), world(w, _heroes), hero
     has_victory = false;
     game_over = create_sprite("gameover.png");
     is_game_over = false;
+
+    vic_snd = create_sound("Pickup_Coin11.wav");
 }
 
 void Game::handle_input(const sf::Event &e) {
@@ -47,6 +49,7 @@ void Game::update(const sf::Time &dt) {
                         [](shared_ptr<AI> x) { return x->hero->is_dead; }),
                  ais.end());
     if (ais.empty() && !has_victory) {
+        vic_snd.play();
         victory_clock.restart();
         has_victory = true;
     }

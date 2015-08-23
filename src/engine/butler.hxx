@@ -13,3 +13,12 @@ shared_ptr<sf::SoundBuffer> get_soundbuffer(string path);
 sf::Text create_txt(string path, int size, string txt = "");
 sf::Sprite create_sprite(string path);
 sf::Sound create_sound(string path);
+
+// Shoot (laser 21)
+// We die (ex 23)
+//
+// Hero die (ex 2)
+// Shield down (ex 1)
+//
+//
+// Victory (coin 11)
