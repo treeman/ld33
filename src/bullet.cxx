@@ -8,6 +8,8 @@ void init_bounds() {
     preset_bounds["cbullet.png"] = shared_ptr<BaseBounds>(new Circle(7, 7, 3));
     preset_bounds["ebullet.png"] = shared_ptr<BaseBounds>(new Circle(11, 13, 8));
     preset_bounds["mbullet.png"] = shared_ptr<BaseBounds>(new Circle(11, 13, 7));
+    preset_bounds["rocket.png"] = shared_ptr<BaseBounds>(new Circle(9, 21, 6));
+    preset_bounds["nbullet.png"] = shared_ptr<BaseBounds>(new Circle(9, 9, 4));
 }
 
 SprBounds get_bounds(string path) {

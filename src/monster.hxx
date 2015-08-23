@@ -30,13 +30,20 @@ public:
     vector<shared_ptr<Bulletspawner>> spawners;
 
     void fire_eyes();
+    bool can_fire_eyes();
     sf::Clock eyes_delay;
 
     void fire_left();
+    bool can_fire_left();
     sf::Clock left_delay;
 
     void fire_right();
+    bool can_fire_right();
     sf::Clock right_delay;
+
+    void fire_mid();
+    bool can_fire_mid();
+    sf::Clock mid_delay;
 
     Bounds bounds;
 
@@ -50,5 +57,7 @@ public:
     const float move_speed = 300;
     const int width = 332;
     const int height = 305;
+
+    sf::Sprite h, hf, j, jf, k, kf, l, lf;
 };
 

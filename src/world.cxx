@@ -8,9 +8,9 @@ const int tile_width = 32;
 const int x_tiles = 20;
 const int y_tiles = 15;
 
-World::World(sf::RenderWindow &w) : window(w) {
+World::World(sf::RenderWindow &w, int num_heroes) : window(w) {
     monster.reset(new Monster(*this));
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < num_heroes; ++i) {
         auto hero = shared_ptr<Hero>(new Hero(*this));
         hero->set_pos(FPoint(rand_int(100, 500), 510));
         heroes.push_back(hero);

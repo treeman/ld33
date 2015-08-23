@@ -11,7 +11,7 @@ using namespace std;
 
 class World {
 public:
-    World(sf::RenderWindow &w);
+    World(sf::RenderWindow &w, int heroes);
 
     void handle_input(const sf::Event &e);
 

@@ -27,8 +27,22 @@ Monster::Monster(World &world) : world(world) {
     bounds.add_rect(30, 156, 51, 172);
     bounds.add_rect(35, 172, 53, 189);
 
-    monster_life = max_monster_life = 10000;
+    monster_life = max_monster_life = 5000;
     is_dead = false;
+
+    h = create_sprite("h.png");
+    hf = create_sprite("hf.png");
+    j = create_sprite("j.png");
+    jf = create_sprite("jf.png");
+    k = create_sprite("k.png");
+    kf = create_sprite("kf.png");
+    l = create_sprite("l.png");
+    lf = create_sprite("lf.png");
+
+    h.setPosition(20, 535); hf.setPosition(20, 535);
+    j.setPosition(64, 535); jf.setPosition(64, 535);
+    k.setPosition(105, 535); kf.setPosition(105, 535);
+    l.setPosition(150, 535); lf.setPosition(150, 535);
 }
 
 void Monster::handle_input(const sf::Event &e) {
@@ -36,6 +50,7 @@ void Monster::handle_input(const sf::Event &e) {
         case sf::Event::KeyPressed:
             if (e.key.code == sf::Keyboard::H) fire_left();
             if (e.key.code == sf::Keyboard::L) fire_right();
+            if (e.key.code == sf::Keyboard::K) fire_mid();
             break;
         default:
             break;
@@ -80,6 +95,14 @@ void Monster::update(const sf::Time &dt) {
 void Monster::draw(sf::RenderWindow &w) {
     w.draw(spr);
     //bounds.draw(w);
+    if (can_fire_left()) w.draw(hf);
+    w.draw(h);
+    if (can_fire_eyes()) w.draw(jf);
+    w.draw(j);
+    if (can_fire_mid()) w.draw(kf);
+    w.draw(k);
+    if (can_fire_right()) w.draw(lf);
+    w.draw(l);
 }
 
 bool Monster::is_collision(shared_ptr<BaseBounds> b) {
@@ -95,7 +118,7 @@ void Monster::fire_bullets(vector<Bullet*> bullets) {
 
 void Monster::fire_eyes() {
     D_.tmp(fmt("pos: %f, %f", pos.x, pos.y));
-    if (eyes_delay.getElapsedTime().asSeconds() > 0.3) {
+    if (can_fire_eyes()) {
         string path = "ebullet.png";
         const int diff = 25;
         const float r1 = rand_int(-diff, diff) + 70;
@@ -108,12 +131,15 @@ void Monster::fire_eyes() {
         eyes_delay.restart();
     }
 }
+bool Monster::can_fire_eyes() {
+    return eyes_delay.getElapsedTime().asSeconds() >= 0.3;
+}
 
 void Monster::fire_left() {
-    if (left_delay.getElapsedTime().asSeconds() > 0.6) {
-        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "cbullet.png"));
+    if (can_fire_left()) {
+        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "nbullet.png"));
         spawner->set_pos(FPoint(140, 196) + pos);
-        const int num = 10;
+        const int num = 6;
         for (int i = 0; i < num; ++i) {
             spawner->add(i * 360 / num, 50, 0);
             //spawner->add(i * 360 / num, 50, 0.5);
@@ -126,10 +152,13 @@ void Monster::fire_left() {
         left_delay.restart();
     }
 }
+bool Monster::can_fire_left() {
+    return left_delay.getElapsedTime().asSeconds() >= 0.5;
+}
 
 void Monster::fire_right() {
-    if (right_delay.getElapsedTime().asSeconds() > 1) {
-        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "cbullet.png"));
+    if (can_fire_right()) {
+        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "nbullet.png"));
         spawner->set_pos(FPoint(160, 190) + pos);
         const int num = 30;
         for (int i = 0; i < num; ++i) {
@@ -156,6 +185,26 @@ void Monster::fire_right() {
             //false)
     //};
     //fire_bullets(bullets);
+}
+bool Monster::can_fire_right() {
+    return right_delay.getElapsedTime().asSeconds() >= 1;
+}
+
+void Monster::fire_mid() {
+    if (can_fire_mid()) {
+        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "rocket.png"));
+        spawner->set_pos(FPoint(171, 226) + pos);
+        const int num = 3;
+        for (int i = 0; i < num; ++i) {
+            spawner->add(90, 100, 0.4 * i);
+        }
+        spawners.push_back(spawner);
+        world.add_spawner(spawner);
+        mid_delay.restart();
+    }
+}
+bool Monster::can_fire_mid() {
+    return mid_delay.getElapsedTime().asSeconds() >= 3;
 }
 
 void Monster::take_damage(float damage) {

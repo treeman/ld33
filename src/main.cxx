@@ -8,8 +8,9 @@ int main()
 {
     shared_ptr<Engine> engine(new Engine());
     StateStack &states = Locator::get_statestack();
-    states.add_generator("game", []{ return new Game(Locator::get_window()); });
-    states.push_generated("game");
+    states.push(shared_ptr<State>(new Game(Locator::get_window(), 1)));
+    //states.add_generator("game", []{ return new Game(Locator::get_window(), 1); });
+    //states.push_generated("game");
     engine->run();
     return 0;
 }

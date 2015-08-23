@@ -7,7 +7,7 @@
 
 class Game : public State {
 public:
-    Game(sf::RenderWindow &w);
+    Game(sf::RenderWindow &w, int heroes);
 
     string id() const override { return "game"; }
 
@@ -20,10 +20,18 @@ public:
     sf::Sprite health_gui;
     sf::Sprite health_bar;
 
-    sf::Sprite h, hf, j, jf, k, kf, l, lf;
-
     void update_monster_health();
 
     vector<shared_ptr<AI>> ais;
+    sf::Sprite victory;
+    sf::Clock victory_clock;
+    bool has_victory;
+    void next_game();
+    int heroes;
+
+    bool is_game_over;
+    sf::Sprite game_over;
+    sf::Clock game_over_clock;
+    void restart();
 };
 

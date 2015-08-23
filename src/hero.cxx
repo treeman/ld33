@@ -34,10 +34,22 @@ Hero::Hero(World &world) : proximity_bound(48, 48, 150), proximity_rect(18, 18, 
 void Hero::set_pos(FPoint _pos) {
     pos = _pos;
     // TODO better hitbox
-    if (pos.x < 0) pos.x = 0;
-    if (pos.x + width > 800) pos.x = 800 - width;
-    if (pos.y < 200) pos.y = 200;
-    if (pos.y + height > 600) pos.y = 600 - height;
+    if (pos.x < 0) {
+        pos.x = 0;
+        if (move_dir.x < 0) move_dir.x = 0;
+    }
+    if (pos.x + width > 800) {
+        pos.x = 800 - width;
+        if (move_dir.x > 0) move_dir.x = 0;
+    }
+    if (pos.y < 200) {
+        pos.y = 200;
+        if (move_dir.y > 0) move_dir.y = 0;
+    }
+    if (pos.y + height > 600) {
+        pos.y = 600 - height;
+        if (move_dir.y < 0) move_dir.y = 0;
+    }
 
     //D_.tmp(fmt("hero pos: %f, %f", pos.x, pos.y));
     spr.setPosition(pos);
