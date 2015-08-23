@@ -29,27 +29,32 @@ void World::update(const sf::Time &dt) {
         x->update(dt);
 
         FPoint p = x->pos;
-        if (p.x < -10 || p.x > 810) x->dead = true;
-        if (p.y < -10 || p.y > 810) x->dead = true;
+        if (p.x < -10 || p.x > 810) x->is_dead = true;
+        if (p.y < -10 || p.y > 810) x->is_dead = true;
 
         if (x->hit_monster) {
             if (monster->is_collision(x->bounds)) {
-                L_("Die you fantastic thing!!!\n");
-                x->dead = true;
+                x->is_dead = true;
+                monster->take_damage(1);
             }
         }
         else {
-
+            for (auto h : heroes) {
+                if (h->is_collision(x->bounds)) {
+                    x->is_dead = true;
+                    // TODO kill hero? Or do what?
+                }
+            }
         }
     }
     // Need to kill of things
     spawners.erase(remove_if(spawners.begin(),
                             spawners.end(),
-                            [](shared_ptr<Bulletspawner> x) { return x->dead; }),
+                            [](shared_ptr<Bulletspawner> x) { return x->is_dead; }),
                   spawners.end());
     bullets.erase(remove_if(bullets.begin(),
                             bullets.end(),
-                            [](shared_ptr<Bullet> b) { return b->dead; }),
+                            [](shared_ptr<Bullet> b) { return b->is_dead; }),
                   bullets.end());
 
     D_.tmp(fmt("Tracking %d bullets\n", bullets.size()));

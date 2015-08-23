@@ -18,7 +18,7 @@ SprBounds get_bounds(string path) {
     return res;
 }
 
-Bullet::Bullet(string id, FPoint start, bool hit_monster) : pos(start), dead(false),
+Bullet::Bullet(string id, FPoint start, bool hit_monster) : pos(start), is_dead(false),
     hit_monster(hit_monster)
 {
     SprBounds sb = get_bounds(id);

@@ -7,8 +7,12 @@ const float move_speed = 300;
 const int width = 85;
 const int height = 87;
 
-Hero::Hero(World &world) : world(world) {
+Hero::Hero(World &world) : proximity_bound(48, 48, 150) , world(world) {
     spr = create_sprite("hero.png");
+
+    bounds.add_rect(22, 20, 75, 90);
+    proximity_bound.shape.setFillColor(sf::Color(0xA1D49011));
+    proximity_bound.shape.setOutlineColor(sf::Color(0x9739A3FF));
 }
 
 void Hero::set_pos(FPoint _pos) {
@@ -21,6 +25,8 @@ void Hero::set_pos(FPoint _pos) {
 
     D_.tmp(fmt("hero pos: %f, %f", pos.x, pos.y));
     spr.setPosition(pos);
+    bounds.set_pos(pos);
+    proximity_bound.set_pos(pos.x, pos.y);
 }
 
 void Hero::move_left() {
@@ -39,6 +45,9 @@ void Hero::move_stop() {
     move_dir.x = 0;
     move_dir.y = 0;
 }
+void Hero::move(FPoint dir) {
+    move_dir = dir;
+}
 
 void Hero::fire_bullets(vector<Bullet*> bullets) {
     for (auto x : bullets) {
@@ -53,6 +62,8 @@ void Hero::fire() {
         string path = "cbullet.png";
         vector<Bullet*> bullets = {
             new VelBullet(path, 800, FPoint(0, -1), FPoint(42, 10), true),
+            new VelBullet(path, 800, FPoint(0, -1), FPoint(16, 40), true),
+            new VelBullet(path, 800, FPoint(0, -1), FPoint(64, 40), true),
         };
         fire_bullets(bullets);
         fire_delay.restart();
@@ -60,12 +71,18 @@ void Hero::fire() {
 }
 
 void Hero::update(const sf::Time &dt) {
-    FPoint dv = FPoint(move_dir).normalize() * move_speed * dt.asSeconds();
+    FPoint dv = move_dir.normalize() * move_speed * dt.asSeconds();
     pos = pos + dv;
     set_pos(pos);
 }
 
 void Hero::draw(sf::RenderWindow &w) {
     w.draw(spr);
+    bounds.draw(w);
+    proximity_bound.draw(w);
+}
+
+bool Hero::is_collision(shared_ptr<BaseBounds> b) {
+    return bounds.intersects(b);
 }
 

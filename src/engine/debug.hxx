@@ -18,7 +18,7 @@ public:
     void set_key(string key, string val);
     void del_key(string key);
 
-    void update();
+    void tick();
 private:
     void clear_tmp();
     virtual void log() = 0;

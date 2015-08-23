@@ -14,7 +14,7 @@ void Debug::del_key(string key) {
     persistent.erase(key);
 }
 
-void Debug::update() {
+void Debug::tick() {
     log();
     clear_tmp();
 }

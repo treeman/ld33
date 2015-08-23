@@ -49,6 +49,10 @@ bool Rect::intersects_circle(Circle *c) {
            c->is_inside(orig.x + x + w, orig.y + y + w);
 }
 
+FPoint Rect::center() const {
+    return FPoint(orig.x + w / 2, orig.y + h / 2);
+}
+
 Circle::Circle(float x, float y, float r) : x(x), y(y), r(r) {
     shape.setOutlineColor(outline);
     shape.setOutlineThickness(thickness);
@@ -80,6 +84,10 @@ void Circle::draw(sf::RenderWindow &window) {
     window.draw(shape);
 }
 
+FPoint Circle::center() const {
+    return FPoint(orig.x + r / 2, orig.y + r / 2);
+}
+
 Bounds::Bounds() { }
 
 void Bounds::add_rect(float x1, float y1, float x2, float y2) {
@@ -105,9 +113,6 @@ void Bounds::draw(sf::RenderWindow &window) {
 
 bool Bounds::intersects(shared_ptr<BaseBounds> b) {
     // Yeah it's slow. Meh :)
-    D_.tmp(fmt("Checking for bounds"));
-    Circle *c = dynamic_cast<Circle*>(b.get());
-    D_.tmp(fmt("circle: %f, %f r: %f", c->x, c->y, c->r));
     for (auto x : bounds) if (x->intersects(b.get())) return true;
     return false;
 }

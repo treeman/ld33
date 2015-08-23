@@ -3,10 +3,6 @@
 #include "bullet.hxx"
 #include "world.hxx"
 
-const float move_speed = 300;
-const int width = 332;
-const int height = 305;
-
 Monster::Monster(World &world) : world(world) {
     spr = create_sprite("monster_main.png");
 
@@ -29,7 +25,9 @@ Monster::Monster(World &world) : world(world) {
     bounds.add_rect(306, 164, 312, 200);
     bounds.add_rect(30, 156, 51, 172);
     bounds.add_rect(35, 172, 53, 189);
-    bounds.add_circle(0, 0, 20);
+
+    monster_life = max_monster_life = 10000;
+    is_dead = false;
 }
 
 void Monster::handle_input(const sf::Event &e) {
@@ -84,7 +82,6 @@ void Monster::draw(sf::RenderWindow &w) {
 }
 
 bool Monster::is_collision(shared_ptr<BaseBounds> b) {
-    //return false;
     return bounds.intersects(b);
 }
 
@@ -100,8 +97,8 @@ void Monster::fire_eyes() {
     if (eyes_fire_delay.getElapsedTime().asSeconds() > 0.05) {
         string path = "cbullet.png";
         vector<Bullet*> bullets = {
-            new VelBullet(path, 500, FPoint(1, 4), FPoint(115, 165) + pos, false),
-            new VelBullet(path, 500, FPoint(1, 2), FPoint(185, 148) + pos, false),
+            new VelBullet(path, 100, FPoint(1, 4), FPoint(115, 165) + pos, false),
+            new VelBullet(path, 100, FPoint(1, 2), FPoint(185, 148) + pos, false),
         };
         fire_bullets(bullets);
 
@@ -114,9 +111,13 @@ void Monster::fire_left() {
     L_("IMBA PEW!\n");
     shared_ptr<Bulletspawner> spawner(new Bulletspawner(world));
     spawner->set_pos(FPoint(85, 240) + pos);
-    const int num = 80;
+    const int num = 20;
     for (int i = 0; i < num; ++i) {
-        spawner->add(i * 720 / num, 50, 0.05 * i);
+        spawner->add(i * 360 / num, 50, 0);
+        spawner->add(i * 360 / num, 50, 0.5);
+        spawner->add(i * 360 / num, 50, 1);
+        spawner->add(i * 360 / num, 50, 1.5);
+        spawner->add(i * 360 / num, 50, 2);
     }
     spawners.push_back(spawner);
     world.add_spawner(spawner);
@@ -138,5 +139,13 @@ void Monster::fire_right() {
             false)
     };
     fire_bullets(bullets);
+}
+
+void Monster::take_damage(float damage) {
+    monster_life -= damage;
+    if (monster_life < 0) {
+        monster_life = 0;
+        is_dead = true;
+    }
 }
 

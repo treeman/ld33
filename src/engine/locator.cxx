@@ -36,8 +36,17 @@ void Locator::provide_logger(unique_ptr<Logger> next) {
     logger.swap(next);
 }
 
+ShapeDebug &Locator::get_shapedebug() {
+    assert(shapedebug != nullptr);
+    return *shapedebug;
+}
+void Locator::provide_shapedebug(unique_ptr<ShapeDebug> x) {
+    shapedebug.swap(x);
+}
+
 unique_ptr<Debug> Locator::debug{ nullptr };
 sf::RenderWindow *Locator::window{ nullptr };
 unique_ptr<StateStack> Locator::statestack{ nullptr };
 unique_ptr<Logger> Locator::logger{ nullptr };
+unique_ptr<ShapeDebug> Locator::shapedebug{ nullptr };
 

@@ -20,7 +20,7 @@ public:
     void draw(sf::RenderWindow &w);
 
     bool is_collision(shared_ptr<BaseBounds> bounds);
-private:
+
     sf::Sprite spr;
     IPoint move_dir;
     FPoint pos;
@@ -36,5 +36,16 @@ private:
     void fire_right();
 
     Bounds bounds;
+
+    float monster_life;
+    float max_monster_life;
+
+    void take_damage(float damage);
+
+    bool is_dead;
+
+    const float move_speed = 300;
+    const int width = 332;
+    const int height = 305;
 };
 

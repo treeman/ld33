@@ -26,7 +26,9 @@ public:
     sf::Sprite spr;
     shared_ptr<BaseBounds> bounds;
 
-    bool dead;
+    FPoint center() const { return bounds->center(); }
+
+    bool is_dead;
     bool hit_monster;
 };
 

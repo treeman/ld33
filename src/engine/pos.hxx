@@ -31,6 +31,8 @@ public:
     Point<T> operator - (const Point &p) const { return Point(x - p.x, y - p.y); }
     Point<T> operator + (const Point &p) const { return Point(x + p.x, y + p.y); }
 
+    Point<T> operator - () const { return Point(-x, -y); }
+
     T operator | (const Point &p) const { return x * p.x + y * p.y; }
     T cross(const Point &p) const { return x * p.y - y * p.x; }
     float dist(const Point &p) const { return hypot((float)(x - p.x), (float)(y - p.y)); }
@@ -66,6 +68,9 @@ public:
 
     static const Point zero;
 };
+
+template<typename T>
+const Point<T> Point<T>::zero{ 0, 0 };
 
 // Return angle aob in radians.
 template<typename T>

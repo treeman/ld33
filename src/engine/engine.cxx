@@ -7,6 +7,7 @@
 #include "butler.hxx"
 #include "printlogger.hxx"
 #include "visualdebug.hxx"
+#include "shapedebug.hxx"
 
 Engine::Engine() {
     // Log to console atm
@@ -20,6 +21,7 @@ Engine::Engine() {
 
     Locator::provide_debug(unique_ptr<VisualDebug>(new VisualDebug({10, 30})));
     Locator::provide_statestack(unique_ptr<StateStack>(new StateStack()));
+    Locator::provide_shapedebug(unique_ptr<ShapeDebug>(new ShapeDebug()));
 
     set_seed(time(0));
 
@@ -88,8 +90,21 @@ void Engine::run() {
         window->clear();
         state->draw();
 
+        //sf::Vertex line[] =
+        //{
+            //sf::Vertex(sf::Vector2f(10, 10)),
+            //sf::Vertex(sf::Vector2f(150, 150))
+        //};
+        //line[0].color = sf::Color(0x000000FF);
+        //line[1].color = sf::Color(0x000000FF);
+
+        //window->draw(line, 2, sf::Lines);
+        SD_.line(FPoint(100, 100), FPoint(200, 120));
+
         // Debugger logs and possibly draws last.
-        Locator::get_debug().update();
+        Locator::get_debug().tick();
+        Locator::get_shapedebug().draw(*window);
+        Locator::get_shapedebug().tick();
 
         fps_txt.setString(to_string((int)fps));
         window->draw(fps_txt);

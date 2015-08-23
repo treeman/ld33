@@ -3,7 +3,7 @@
 #include "world.hxx"
 #include "bullet.hxx"
 
-Bulletspawner::Bulletspawner(World &w) : dead(false), world(w) { }
+Bulletspawner::Bulletspawner(World &w) : is_dead(false), world(w) { }
 
 void Bulletspawner::update(const sf::Time &) {
     float t = elapsed.getElapsedTime().asSeconds();
@@ -23,7 +23,7 @@ void Bulletspawner::update(const sf::Time &) {
                                 to_generate.end(),
                                 [t](Info x) { return x.delay < t; }),
                       to_generate.end());
-    dead = to_generate.empty();
+    is_dead = to_generate.empty();
 }
 
 // Set base position of the spawner

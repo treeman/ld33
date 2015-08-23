@@ -3,6 +3,7 @@
 #include "engine/state.hxx"
 #include "world.hxx"
 #include "statusbar.hxx"
+#include "ai.hxx"
 
 class Game : public State {
 public:
@@ -19,7 +20,9 @@ public:
     sf::Sprite base_gui;
     sf::Sprite health_bar;
 
-    void set_monster_health(float frac);
+    void update_monster_health();
+
+    vector<AI> ais;
 };
 
 // Weapons:

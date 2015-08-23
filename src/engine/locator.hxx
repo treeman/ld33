@@ -7,10 +7,12 @@
 #include "state.hxx"
 #include "statestack.hxx"
 #include "log.hxx"
+#include "shapedebug.hxx"
 
 // EZ!
 #define L_ (Locator::get_logger())
 #define D_ (Locator::get_debug())
+#define SD_ (Locator::get_shapedebug())
 
 // Static accessor class for global functions, singletons etc
 // purely for convenience!
@@ -28,10 +30,14 @@ public:
 
     static Logger &get_logger();
     static void provide_logger(unique_ptr<Logger> logger);
+
+    static ShapeDebug &get_shapedebug();
+    static void provide_shapedebug(unique_ptr<ShapeDebug> shapedebug);
 private:
     static unique_ptr<Debug> debug;
     static sf::RenderWindow *window;
     static unique_ptr<StateStack> statestack;
     static unique_ptr<Logger> logger;
+    static unique_ptr<ShapeDebug> shapedebug;
 };
 

@@ -18,7 +18,7 @@ public:
     // Add bullet generators
     void add(float angle, float speed, float delay);
 
-    bool dead;
+    bool is_dead;
 private:
     World &world;
 

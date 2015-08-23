@@ -18,6 +18,7 @@ struct BaseBounds {
 
     virtual void draw(sf::RenderWindow &w) = 0;
 
+    virtual FPoint center() const = 0;
     void set_pos(float x, float y) { orig.x = x; orig.y = y; }
     void move(float x, float y) { orig.x += x; orig.y += y; }
 
@@ -36,8 +37,10 @@ struct Rect : public BaseBounds {
 
     void draw(sf::RenderWindow &w) override;
 
+    FPoint center() const override;
+
     float x, y, w, h;
-private:
+
     sf::RectangleShape shape;
 };
 
@@ -53,8 +56,10 @@ struct Circle : public BaseBounds {
 
     void draw(sf::RenderWindow &w) override;
 
+    FPoint center() const override;
+
     float x, y, r;
-private:
+
     sf::CircleShape shape;
 };
 
@@ -66,7 +71,6 @@ public:
     void add_rect(float x1, float y1, float x2, float y2);
     void add_circle(float x, float y, float r);
     void set_pos(FPoint pos);
-    //void move(FPoint dp);
 
     void draw(sf::RenderWindow &w);
 
