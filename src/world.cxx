@@ -64,8 +64,8 @@ void World::update(const sf::Time &dt) {
                            [](shared_ptr<Hero> x) { return x->is_dead; }),
                  heroes.end());
 
-    D_.tmp(fmt("Tracking %d bullets\n", bullets.size()));
-    D_.tmp(fmt("And %d spawners\n", spawners.size()));
+    //D_.tmp(fmt("Tracking %d bullets\n", bullets.size()));
+    //D_.tmp(fmt("And %d spawners\n", spawners.size()));
 }
 
 void World::draw() {

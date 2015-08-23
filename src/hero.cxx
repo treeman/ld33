@@ -95,7 +95,7 @@ void Hero::update(const sf::Time &dt) {
 
     if (shield_load < 1)
         shield_load += dt.asSeconds() * 0.2;
-    D_.tmp(fmt("load: %f", shield_load));
+    //D_.tmp(fmt("load: %f", shield_load));
 
     pos = pos + dv;
     set_pos(pos);

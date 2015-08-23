@@ -17,8 +17,10 @@ public:
 
     sf::Text txt;
     World world;
-    sf::Sprite base_gui;
+    sf::Sprite health_gui;
     sf::Sprite health_bar;
+
+    sf::Sprite h, hf, j, jf, k, kf, l, lf;
 
     void update_monster_health();
 

@@ -150,7 +150,7 @@ void AI::avoid_bullets(float dt) {
         if (closest != nullptr) {
             FPoint dir = closest->center() - center;
             hero->move(-dir);
-            SD_.line(center, closest->center());
+            //SD_.line(center, closest->center());
         }
 
         // Move in perpendicular direction
@@ -167,7 +167,7 @@ void AI::avoid_bullets(float dt) {
 void AI::avoid_monster(float dt) {
     float monster_y = monster->pos.y + monster->height;
     if (hero->pos.y < monster_y) {
-        D_.tmp("monster collision!");
+        //D_.tmp("monster collision!");
         hero->move_down();
     }
 }

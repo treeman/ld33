@@ -10,9 +10,8 @@ Entry for Ludum Dare 33!
 * Instruction
 * End of the game
 
-## Bouns
+## Bonus
 
-* Multiple heroes
 * Powerups
 
 # Weapons

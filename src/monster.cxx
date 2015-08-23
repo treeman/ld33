@@ -50,7 +50,7 @@ void Monster::set_pos(FPoint _pos) {
     if (pos.y < 0) pos.y = 0;
     if (pos.y + height > 500) pos.y = 500 - height;
 
-    D_.tmp(fmt("monster pos: %f, %f", pos.x, pos.y));
+    //D_.tmp(fmt("monster pos: %f, %f", pos.x, pos.y));
     spr.setPosition(pos);
     bounds.set_pos(pos);
 }

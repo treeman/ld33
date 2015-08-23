@@ -9,11 +9,27 @@
 Game::Game(sf::RenderWindow &w) : State(w), world(w) {
     L_("Building Game\n");
     txt = create_txt("consola.ttf", 14);
-    base_gui = create_sprite("base_gui.png");
+    //base_gui = create_sprite("base_gui.png");
+    health_gui = create_sprite("health_gui.png");
     health_bar = create_sprite("health.png");
+    health_gui.setPosition(332, 18);
     health_bar.setPosition(332, 18);
-    init_bounds();
 
+    h = create_sprite("h.png");
+    hf = create_sprite("hf.png");
+    j = create_sprite("j.png");
+    jf = create_sprite("jf.png");
+    k = create_sprite("k.png");
+    kf = create_sprite("kf.png");
+    l = create_sprite("l.png");
+    lf = create_sprite("lf.png");
+
+    h.setPosition(20, 535); hf.setPosition(20, 535);
+    j.setPosition(64, 535); jf.setPosition(64, 535);
+    k.setPosition(105, 535); kf.setPosition(105, 535);
+    l.setPosition(150, 535); lf.setPosition(150, 535);
+
+    init_bounds();
     for (auto h : world.heroes) {
         ais.push_back(shared_ptr<AI>(new AI(h, world)));
     }
@@ -53,13 +69,25 @@ void Game::update(const sf::Time &dt) {
 
 void Game::draw() {
     world.draw();
-    window.draw(base_gui);
+    //window.draw(base_gui);
     window.draw(health_bar);
+    window.draw(health_gui);
+
+    //const float x = 35;
+    //const float y = 535;
+    window.draw(hf);
+    window.draw(h);
+    window.draw(jf);
+    window.draw(j);
+    window.draw(kf);
+    window.draw(k);
+    window.draw(lf);
+    window.draw(l);
 }
 
 void Game::update_monster_health() {
     float frac = world.monster->monster_life / world.monster->max_monster_life;
-    D_.tmp(fmt("Health: %f", frac));
+    //D_.tmp(fmt("Health: %f", frac));
 
     // How to set % of health ;)
     health_bar.setScale(frac, 1);
