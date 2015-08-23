@@ -60,9 +60,9 @@ public:
         cout << "(" << x << ", " << y << ")" << s << flush;
     }
 
-    string to_string() const {
-        return std::to_string(x) + ", " + std::to_string(y);
-    }
+    //string to_string() const {
+    //    return std::to_string(x) + ", " + std::to_string(y);
+    //}
 
     T x, y;
 

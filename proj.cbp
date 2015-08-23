@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="test" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add directory="C:/SFML-2.3.1/include" />
+			<Add directory="C:/Users/Doe/ld33/src" />
+		</Compiler>
+		<Linker>
+			<Add library="sfml-audio" />
+			<Add library="sfml-network" />
+			<Add library="sfml-graphics" />
+			<Add library="sfml-window" />
+			<Add library="sfml-system" />
+			<Add directory="C:/SFML-2.3.1/lib" />
+		</Linker>
+		<Unit filename="src/ai.cxx" />
+		<Unit filename="src/ai.hxx" />
+		<Unit filename="src/angles.cxx" />
+		<Unit filename="src/angles.hxx" />
+		<Unit filename="src/bounds.cxx" />
+		<Unit filename="src/bounds.hxx" />
+		<Unit filename="src/bullet.cxx" />
+		<Unit filename="src/bullet.hxx" />
+		<Unit filename="src/bulletspawner.cxx" />
+		<Unit filename="src/bulletspawner.hxx" />
+		<Unit filename="src/engine/butler.cxx" />
+		<Unit filename="src/engine/butler.hxx" />
+		<Unit filename="src/engine/debug.cxx" />
+		<Unit filename="src/engine/debug.hxx" />
+		<Unit filename="src/engine/die.cxx" />
+		<Unit filename="src/engine/die.hxx" />
+		<Unit filename="src/engine/engine.cxx" />
+		<Unit filename="src/engine/engine.hxx" />
+		<Unit filename="src/engine/fmt.cxx" />
+		<Unit filename="src/engine/fmt.hxx" />
+		<Unit filename="src/engine/lines.cxx" />
+		<Unit filename="src/engine/lines.hxx" />
+		<Unit filename="src/engine/locator.cxx" />
+		<Unit filename="src/engine/locator.hxx" />
+		<Unit filename="src/engine/log.hxx" />
+		<Unit filename="src/engine/pos.hxx" />
+		<Unit filename="src/engine/printlogger.hxx" />
+		<Unit filename="src/engine/rand.cxx" />
+		<Unit filename="src/engine/rand.hxx" />
+		<Unit filename="src/engine/shapedebug.cxx" />
+		<Unit filename="src/engine/shapedebug.hxx" />
+		<Unit filename="src/engine/state.hxx" />
+		<Unit filename="src/engine/statestack.hxx" />
+		<Unit filename="src/engine/visualdebug.cxx" />
+		<Unit filename="src/engine/visualdebug.hxx" />
+		<Unit filename="src/game.cxx" />
+		<Unit filename="src/game.hxx" />
+		<Unit filename="src/hero.cxx" />
+		<Unit filename="src/hero.hxx" />
+		<Unit filename="src/instr.cxx" />
+		<Unit filename="src/instr.hxx" />
+		<Unit filename="src/main.cxx" />
+		<Unit filename="src/monster.cxx" />
+		<Unit filename="src/monster.hxx" />
+		<Unit filename="src/statusbar.cxx" />
+		<Unit filename="src/statusbar.hxx" />
+		<Unit filename="src/tile.cxx" />
+		<Unit filename="src/tile.hxx" />
+		<Unit filename="src/world.cxx" />
+		<Unit filename="src/world.hxx" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

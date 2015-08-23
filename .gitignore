@@ -5,3 +5,7 @@
 *.swp
 /bin/ld33
 tmp
+*.dll
+*.layout
+*.depend
+*.exe

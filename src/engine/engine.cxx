@@ -81,7 +81,10 @@ void Engine::run() {
 
         // Debug mouse position
         auto mp = sf::Mouse::getPosition(*window);
-        D_.set_key("mpos", to_string(mp.x) + ", " + to_string(mp.y));
+        stringstream ss;
+        ss << mp.x + ", " + mp.y;
+        D_.set_key("mpos", ss.str());
+        //D_.set_key("mpos", to_string(mp.x) + ", " + to_string(mp.y));
 
         // Update shit
         state->update(dt);
@@ -95,7 +98,10 @@ void Engine::run() {
         Locator::get_shapedebug().draw(*window);
         Locator::get_shapedebug().tick();
 
-        fps_txt.setString(to_string((int)fps));
+        ss.str("");
+        ss << (int)fps;
+        fps_txt.setString(ss.str());
+        //fps_txt.setString(to_string((int)fps));
         window->draw(fps_txt);
 
         window->display();
