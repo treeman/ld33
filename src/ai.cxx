@@ -37,7 +37,7 @@ bool AI::projected_to_hit(shared_ptr<Bullet> b, float dt) {
     FPoint vel = x->vel(dt);
     FPoint p2 = p1 + vel * 1000;
     FLineSegment l(p1, p2);
-    SD_.line(p1, p2);
+    //SD_.line(p1, p2);
     return hero->proximity_rect.intersects(l);
 }
 
@@ -100,14 +100,13 @@ void AI::random_walk(float dt) {
     hero->move(dir);
 
     // Visualize it...
-    FPoint p = hero->pos;
-    const float r = 50;
-    shared_ptr<sf::CircleShape> c(new sf::CircleShape(r));
-    //L_("r: %f\n", c->getRadius());
-    c->setOrigin(r, r);
-    c->setPosition(p);
-    SD_.line(p, p + dir.normalize() * r);
-    SD_.add(c);
+    //FPoint p = hero->pos;
+    //const float r = 50;
+    //shared_ptr<sf::CircleShape> c(new sf::CircleShape(r));
+    //c->setOrigin(r, r);
+    //c->setPosition(p);
+    //SD_.line(p, p + dir.normalize() * r);
+    //SD_.add(c);
 }
 void AI::move_below(float dt) {
     // Always try to be below?
@@ -136,7 +135,7 @@ void AI::avoid_bullets(float dt) {
         float min_dist = numeric_limits<float>::max();
         for (auto b : close) {
             if (projected_to_hit(b, dt)) {
-                SD_.line(b->center(), center);
+                //SD_.line(b->center(), center);
                 const float dist = center.dist(b->center());
                 if (dist < min_dist) {
                     min_dist = dist;
@@ -149,7 +148,7 @@ void AI::avoid_bullets(float dt) {
         if (closest != nullptr) {
             FPoint dir = closest->center() - center;
             hero->move(-dir);
-            SD_.line(center, closest->center());
+            //SD_.line(center, closest->center());
         }
 
         // Move in perpendicular direction

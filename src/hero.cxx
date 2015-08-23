@@ -77,8 +77,8 @@ void Hero::fire() {
 
 void Hero::update(const sf::Time &dt) {
     FPoint dv = move_dir.normalize() * move_speed * dt.asSeconds();
-    FPoint cpos = proximity_rect.center();
-    SD_.line(cpos, cpos + dv * 100);
+    //FPoint cpos = proximity_rect.center();
+    //SD_.line(cpos, cpos + dv * 100);
 
     pos = pos + dv;
     set_pos(pos);
@@ -87,8 +87,8 @@ void Hero::update(const sf::Time &dt) {
 void Hero::draw(sf::RenderWindow &w) {
     w.draw(spr);
     //bounds.draw(w);
-    proximity_bound.draw(w);
-    proximity_rect.draw(w);
+    //proximity_bound.draw(w);
+    //proximity_rect.draw(w);
 }
 
 bool Hero::is_collision(shared_ptr<BaseBounds> b) {

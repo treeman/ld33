@@ -78,7 +78,7 @@ void Monster::update(const sf::Time &dt) {
 
 void Monster::draw(sf::RenderWindow &w) {
     w.draw(spr);
-    bounds.draw(w);
+    //bounds.draw(w);
 }
 
 bool Monster::is_collision(shared_ptr<BaseBounds> b) {
@@ -108,7 +108,6 @@ void Monster::fire_eyes() {
 }
 
 void Monster::fire_left() {
-    L_("IMBA PEW!\n");
     shared_ptr<Bulletspawner> spawner(new Bulletspawner(world));
     spawner->set_pos(FPoint(85, 240) + pos);
     const int num = 20;

@@ -29,12 +29,12 @@ Bullet::Bullet(string id, FPoint start, bool hit_monster) : pos(start), is_dead(
 }
 
 void Bullet::draw(sf::RenderWindow &w) {
-    D_.set_key("bullet", fmt("%f, %f", pos.x, pos.y));
-    Circle *c = dynamic_cast<Circle*>(bounds.get());
-    D_.set_key("bounds", fmt("%f, %f", c->x, c->y));
+    //D_.set_key("bullet", fmt("%f, %f", pos.x, pos.y));
+    //Circle *c = dynamic_cast<Circle*>(bounds.get());
+    //D_.set_key("bounds", fmt("%f, %f", c->x, c->y));
     spr.setPosition(pos);
     w.draw(spr);
-    bounds->draw(w);
+    //bounds->draw(w);
 }
 
 VelBullet::VelBullet(string path, float speed, FPoint dir, FPoint start, bool hit_monster) :
