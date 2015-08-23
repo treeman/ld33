@@ -7,7 +7,7 @@ class World;
 
 class Bulletspawner {
 public:
-    Bulletspawner(World &w);
+    Bulletspawner(World &w, string bullet);
 
     void update(const sf::Time &dt);
 
@@ -28,6 +28,7 @@ private:
     vector<Info> to_generate;
     FPoint pos;
     sf::Clock elapsed;
+    string bullet;
 };
 
 // Speed

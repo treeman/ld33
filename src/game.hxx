@@ -25,16 +25,3 @@ public:
     vector<shared_ptr<AI>> ais;
 };
 
-// Weapons:
-// 1. Eye lazer
-// 2. Left whirler
-// 3. Right whirler
-// 4. Bouncer
-// 5. Rockets
-
-// Powerups:
-// 1. Bullet masher :w
-
-// Status:
-// 1. Life
-

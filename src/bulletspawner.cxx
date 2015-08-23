@@ -3,14 +3,15 @@
 #include "world.hxx"
 #include "bullet.hxx"
 
-Bulletspawner::Bulletspawner(World &w) : is_dead(false), world(w) { }
+Bulletspawner::Bulletspawner(World &w, string bullet) : is_dead(false), world(w), bullet(bullet)
+{ }
 
 void Bulletspawner::update(const sf::Time &) {
     float t = elapsed.getElapsedTime().asSeconds();
     for (auto it = to_generate.begin(); it != to_generate.end(); ++it) {
         if (it->delay < t) {
             world.add_bullet(shared_ptr<Bullet>(new VelBullet(
-                "cbullet.png", // TODO fix
+                bullet,
                 it->speed,
                 angle2dir(it->angle),
                 pos,

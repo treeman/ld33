@@ -1,4 +1,5 @@
 #include "engine/locator.hxx"
+#include "engine/rand.hxx"
 #include "monster.hxx"
 #include "bullet.hxx"
 #include "world.hxx"
@@ -94,50 +95,67 @@ void Monster::fire_bullets(vector<Bullet*> bullets) {
 
 void Monster::fire_eyes() {
     D_.tmp(fmt("pos: %f, %f", pos.x, pos.y));
-    if (eyes_fire_delay.getElapsedTime().asSeconds() > 0.05) {
-        string path = "cbullet.png";
+    if (eyes_delay.getElapsedTime().asSeconds() > 0.3) {
+        string path = "ebullet.png";
+        const int diff = 25;
+        const float r1 = rand_int(-diff, diff) + 70;
+        const float r2 = rand_int(-diff, diff) + 110;
         vector<Bullet*> bullets = {
-            new VelBullet(path, 100, FPoint(1, 4), FPoint(115, 165) + pos, false),
-            new VelBullet(path, 100, FPoint(1, 2), FPoint(185, 148) + pos, false),
+            new VelBullet(path, 100, angle2dir(r1), FPoint(115, 165) + pos, false),
+            new VelBullet(path, 100, angle2dir(r2), FPoint(185, 148) + pos, false),
         };
         fire_bullets(bullets);
-
-        // Offset for monster position
-        eyes_fire_delay.restart();
+        eyes_delay.restart();
     }
 }
 
 void Monster::fire_left() {
-    shared_ptr<Bulletspawner> spawner(new Bulletspawner(world));
-    spawner->set_pos(FPoint(85, 240) + pos);
-    const int num = 20;
-    for (int i = 0; i < num; ++i) {
-        spawner->add(i * 360 / num, 50, 0);
-        spawner->add(i * 360 / num, 50, 0.5);
-        spawner->add(i * 360 / num, 50, 1);
-        spawner->add(i * 360 / num, 50, 1.5);
-        spawner->add(i * 360 / num, 50, 2);
+    if (left_delay.getElapsedTime().asSeconds() > 0.6) {
+        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "cbullet.png"));
+        spawner->set_pos(FPoint(140, 196) + pos);
+        const int num = 10;
+        for (int i = 0; i < num; ++i) {
+            spawner->add(i * 360 / num, 50, 0);
+            //spawner->add(i * 360 / num, 50, 0.5);
+            //spawner->add(i * 360 / num, 50, 1);
+            //spawner->add(i * 360 / num, 50, 1.5);
+            //spawner->add(i * 360 / num, 50, 2);
+        }
+        spawners.push_back(spawner);
+        world.add_spawner(spawner);
+        left_delay.restart();
     }
-    spawners.push_back(spawner);
-    world.add_spawner(spawner);
 }
 
 void Monster::fire_right() {
-    //const float r = 200;
-    const float a = 50;
-    const float b = .25;
-    //const float th = deg2rad(30);
-    const float av = deg2rad(200);
+    if (right_delay.getElapsedTime().asSeconds() > 1) {
+        shared_ptr<Bulletspawner> spawner(new Bulletspawner(world, "cbullet.png"));
+        spawner->set_pos(FPoint(160, 190) + pos);
+        const int num = 30;
+        for (int i = 0; i < num; ++i) {
+            spawner->add(i * 360 / num, 50, 0.1 * i);
+            //spawner->add(i * 360 / num, 50, 0.5);
+            //spawner->add(i * 360 / num, 50, 1);
+            //spawner->add(i * 360 / num, 50, 1.5);
+            //spawner->add(i * 360 / num, 50, 2);
+        }
+        spawners.push_back(spawner);
+        world.add_spawner(spawner);
+        right_delay.restart();
+    }
+    //const float a = 50;
+    //const float b = .25;
+    //const float av = deg2rad(200);
 
-    string path = "cbullet.png";
-    vector<Bullet*> bullets = {
-        new FunBullet(path, 50, FPoint(292, 190) + pos,
-            // theta = angle vel * time
-            [a, b, av](float t) { return a * cos(av * t) * exp(b * av * t); },
-            [a, b, av](float t) { return a * sin(av * t) * exp(b * av * t); },
-            false)
-    };
-    fire_bullets(bullets);
+    //string path = "mbullet.png";
+    //vector<Bullet*> bullets = {
+        //new FunBullet(path, 50, FPoint(292, 190) + pos,
+            //// theta = angle vel * time
+            //[a, b, av](float t) { return a * cos(av * t) * exp(b * av * t); },
+            //[a, b, av](float t) { return a * sin(av * t) * exp(b * av * t); },
+            //false)
+    //};
+    //fire_bullets(bullets);
 }
 
 void Monster::take_damage(float damage) {

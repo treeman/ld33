@@ -39,5 +39,16 @@ public:
     sf::Clock fire_delay;
 
     Bounds bounds;
+    Bounds shield_bounds;
+
+    void hit();
+    sf::Sprite heart, empty_heart;
+    int life;
+    bool is_dead;
+
+    float shield_load; // 0 <- 1
+    sf::Sprite shield_status;
+    sf::Sprite shield_status_loading;
+    sf::Sprite shield;
 };
 

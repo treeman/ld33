@@ -1,6 +1,7 @@
 #include "engine/butler.hxx"
 #include "engine/pos.hxx"
 #include "engine/locator.hxx"
+#include "engine/rand.hxx"
 #include "world.hxx"
 
 const int tile_width = 32;
@@ -9,9 +10,11 @@ const int y_tiles = 15;
 
 World::World(sf::RenderWindow &w) : window(w) {
     monster.reset(new Monster(*this));
-    auto hero = shared_ptr<Hero>(new Hero(*this));
-    hero->set_pos(FPoint(380, 510));
-    heroes.push_back(hero);
+    for (int i = 0; i < 3; ++i) {
+        auto hero = shared_ptr<Hero>(new Hero(*this));
+        hero->set_pos(FPoint(rand_int(100, 500), 510));
+        heroes.push_back(hero);
+    }
 }
 
 void World::handle_input(const sf::Event &e) {
@@ -42,7 +45,7 @@ void World::update(const sf::Time &dt) {
             for (auto h : heroes) {
                 if (h->is_collision(x->bounds)) {
                     x->is_dead = true;
-                    // TODO kill hero? Or do what?
+                    h->hit();
                 }
             }
         }
@@ -56,6 +59,10 @@ void World::update(const sf::Time &dt) {
                             bullets.end(),
                             [](shared_ptr<Bullet> b) { return b->is_dead; }),
                   bullets.end());
+    heroes.erase(remove_if(heroes.begin(),
+                           heroes.end(),
+                           [](shared_ptr<Hero> x) { return x->is_dead; }),
+                 heroes.end());
 
     D_.tmp(fmt("Tracking %d bullets\n", bullets.size()));
     D_.tmp(fmt("And %d spawners\n", spawners.size()));

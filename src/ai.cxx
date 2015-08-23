@@ -144,14 +144,23 @@ void AI::avoid_bullets(float dt) {
             }
         }
 
+        // Opposite seems to be a little bit better.
+
         // Move into opposite direction
         if (closest != nullptr) {
             FPoint dir = closest->center() - center;
             hero->move(-dir);
-            //SD_.line(center, closest->center());
+            SD_.line(center, closest->center());
         }
 
         // Move in perpendicular direction
+        //if (closest != nullptr) {
+            //FPoint dir = closest->center() - center;
+            //FPoint to(-dir.y, dir.x);
+            //hero->move(to);
+            //SD_.line(center, closest->center());
+            //SD_.line(center, center + to * 100);
+        //}
     }
 }
 

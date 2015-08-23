@@ -30,10 +30,13 @@ public:
     vector<shared_ptr<Bulletspawner>> spawners;
 
     void fire_eyes();
-    sf::Clock eyes_fire_delay;
+    sf::Clock eyes_delay;
 
     void fire_left();
+    sf::Clock left_delay;
+
     void fire_right();
+    sf::Clock right_delay;
 
     Bounds bounds;
 

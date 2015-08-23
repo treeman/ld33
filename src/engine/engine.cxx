@@ -90,17 +90,6 @@ void Engine::run() {
         window->clear();
         state->draw();
 
-        //sf::Vertex line[] =
-        //{
-            //sf::Vertex(sf::Vector2f(10, 10)),
-            //sf::Vertex(sf::Vector2f(150, 150))
-        //};
-        //line[0].color = sf::Color(0x000000FF);
-        //line[1].color = sf::Color(0x000000FF);
-
-        //window->draw(line, 2, sf::Lines);
-        SD_.line(FPoint(100, 100), FPoint(200, 120));
-
         // Debugger logs and possibly draws last.
         Locator::get_debug().tick();
         Locator::get_shapedebug().draw(*window);

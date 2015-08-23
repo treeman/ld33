@@ -8,7 +8,7 @@ public:
     AI(shared_ptr<Hero> hero, World &world);
 
     void update(const sf::Time &dt);
-private:
+
     shared_ptr<Hero> hero;
     shared_ptr<Monster> monster;
     World &world;

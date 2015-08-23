@@ -32,6 +32,10 @@ void Game::handle_input(const sf::Event &e) {
 void Game::update(const sf::Time &dt) {
     world.update(dt);
     for (auto ai : ais) ai->update(dt);
+    ais.erase(remove_if(ais.begin(),
+                        ais.end(),
+                        [](shared_ptr<AI> x) { return x->hero->is_dead; }),
+                 ais.end());
 
     // Lawl
     // TODO fix

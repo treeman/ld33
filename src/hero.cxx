@@ -13,10 +13,22 @@ Hero::Hero(World &world) : proximity_bound(48, 48, 150), proximity_rect(18, 18, 
     spr = create_sprite("hero.png");
 
     bounds.add_rect(22, 20, 75, 90);
+    shield_bounds.add_circle(51, 50, 47);
     proximity_bound.shape.setFillColor(sf::Color(0xA1D49011));
     proximity_bound.shape.setOutlineColor(sf::Color(0x9739A3FF));
     proximity_rect.shape.setFillColor(sf::Color(0xA1D49011));
     proximity_rect.shape.setOutlineColor(sf::Color(0x9739A3FF));
+
+    heart = create_sprite("heart.png");
+    empty_heart = create_sprite("empty_heart.png");
+    life = 4;
+    is_dead = false;
+
+    //shield_load = 1;
+    shield_load = 0.4;
+    shield_status = create_sprite("shieldstatus.png");
+    shield_status_loading = create_sprite("shieldstatus_loading.png");
+    shield = create_sprite("shield.png");
 }
 
 void Hero::set_pos(FPoint _pos) {
@@ -27,9 +39,10 @@ void Hero::set_pos(FPoint _pos) {
     if (pos.y < 200) pos.y = 200;
     if (pos.y + height > 600) pos.y = 600 - height;
 
-    D_.tmp(fmt("hero pos: %f, %f", pos.x, pos.y));
+    //D_.tmp(fmt("hero pos: %f, %f", pos.x, pos.y));
     spr.setPosition(pos);
     bounds.set_pos(pos);
+    shield_bounds.set_pos(pos);
     proximity_bound.set_pos(pos.x, pos.y);
     proximity_rect.set_pos(pos.x, pos.y);
 }
@@ -80,6 +93,10 @@ void Hero::update(const sf::Time &dt) {
     //FPoint cpos = proximity_rect.center();
     //SD_.line(cpos, cpos + dv * 100);
 
+    if (shield_load < 1)
+        shield_load += dt.asSeconds() * 0.2;
+    D_.tmp(fmt("load: %f", shield_load));
+
     pos = pos + dv;
     set_pos(pos);
 }
@@ -87,11 +104,50 @@ void Hero::update(const sf::Time &dt) {
 void Hero::draw(sf::RenderWindow &w) {
     w.draw(spr);
     //bounds.draw(w);
+    //shield_bounds.draw(w);
     //proximity_bound.draw(w);
     //proximity_rect.draw(w);
+    const float y = pos.y + 84;
+    const float left_x = pos.x + 10;
+    for (int i = 0; i < 4; ++i) {
+        sf::Sprite *s = nullptr;
+        if (life > i) s = &heart;
+        else s = &empty_heart;
+
+        s->setPosition(left_x + 18 * i, y);
+        w.draw(*s);
+    }
+
+    const FPoint shield_pos(pos.x + 85, pos.y + 25);
+
+    if (shield_load < 1) {
+        shield_status_loading.setPosition(shield_pos);
+        shield_status_loading.setScale(1, shield_load);
+        w.draw(shield_status_loading);
+    }
+    else {
+        shield_status.setPosition(shield_pos);
+        w.draw(shield_status);
+        shield.setPosition(pos);
+        w.draw(shield);
+    }
 }
 
 bool Hero::is_collision(shared_ptr<BaseBounds> b) {
-    return bounds.intersects(b);
+    if (shield_load >= 1) return bounds.intersects(b);
+    else return shield_bounds.intersects(b);
+}
+
+void Hero::hit() {
+    if (shield_load >= 1) {
+        shield_load = 0;
+    }
+    else {
+        life -= 1;
+        if (life <= 0) {
+            is_dead = true;
+            life = 0;
+        }
+    }
 }
 
