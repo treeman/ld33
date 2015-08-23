@@ -7,12 +7,16 @@ const float move_speed = 300;
 const int width = 85;
 const int height = 87;
 
-Hero::Hero(World &world) : proximity_bound(48, 48, 150) , world(world) {
+Hero::Hero(World &world) : proximity_bound(48, 48, 150), proximity_rect(18, 18, 82, 94),
+        world(world)
+{
     spr = create_sprite("hero.png");
 
     bounds.add_rect(22, 20, 75, 90);
     proximity_bound.shape.setFillColor(sf::Color(0xA1D49011));
     proximity_bound.shape.setOutlineColor(sf::Color(0x9739A3FF));
+    proximity_rect.shape.setFillColor(sf::Color(0xA1D49011));
+    proximity_rect.shape.setOutlineColor(sf::Color(0x9739A3FF));
 }
 
 void Hero::set_pos(FPoint _pos) {
@@ -27,6 +31,7 @@ void Hero::set_pos(FPoint _pos) {
     spr.setPosition(pos);
     bounds.set_pos(pos);
     proximity_bound.set_pos(pos.x, pos.y);
+    proximity_rect.set_pos(pos.x, pos.y);
 }
 
 void Hero::move_left() {
@@ -72,14 +77,18 @@ void Hero::fire() {
 
 void Hero::update(const sf::Time &dt) {
     FPoint dv = move_dir.normalize() * move_speed * dt.asSeconds();
+    FPoint cpos = proximity_rect.center();
+    SD_.line(cpos, cpos + dv * 100);
+
     pos = pos + dv;
     set_pos(pos);
 }
 
 void Hero::draw(sf::RenderWindow &w) {
     w.draw(spr);
-    bounds.draw(w);
+    //bounds.draw(w);
     proximity_bound.draw(w);
+    proximity_rect.draw(w);
 }
 
 bool Hero::is_collision(shared_ptr<BaseBounds> b) {

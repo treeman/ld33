@@ -22,7 +22,7 @@ public:
 
     void update_monster_health();
 
-    vector<AI> ais;
+    vector<shared_ptr<AI>> ais;
 };
 
 // Weapons:

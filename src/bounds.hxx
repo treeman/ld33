@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "engine/pos.hxx"
+#include "engine/lines.hxx"
 
 class Rect;
 class Circle;
@@ -34,6 +35,9 @@ struct Rect : public BaseBounds {
     bool intersects_rect(Rect *r) override;
     bool intersects_circle(Circle *c) override;
     bool intersects(BaseBounds *b) override;
+
+    // XXX Not for circles for now
+    bool intersects(LineSegment<float> l);
 
     void draw(sf::RenderWindow &w) override;
 
@@ -75,6 +79,7 @@ public:
     void draw(sf::RenderWindow &w);
 
     bool intersects(shared_ptr<BaseBounds> b);
+    bool intersects(BaseBounds *b);
 
     FPoint pos;
 

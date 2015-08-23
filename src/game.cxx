@@ -7,6 +7,7 @@
 #include "bullet.hxx"
 
 Game::Game(sf::RenderWindow &w) : State(w), world(w) {
+    L_("Building Game\n");
     txt = create_txt("consola.ttf", 14);
     base_gui = create_sprite("base_gui.png");
     health_bar = create_sprite("health.png");
@@ -14,7 +15,7 @@ Game::Game(sf::RenderWindow &w) : State(w), world(w) {
     init_bounds();
 
     for (auto h : world.heroes) {
-        ais.push_back(AI(h, world));
+        ais.push_back(shared_ptr<AI>(new AI(h, world)));
     }
 }
 
@@ -30,7 +31,7 @@ void Game::handle_input(const sf::Event &e) {
 
 void Game::update(const sf::Time &dt) {
     world.update(dt);
-    for (auto ai : ais) ai.update(dt);
+    for (auto ai : ais) ai->update(dt);
 
     // Lawl
     // TODO fix

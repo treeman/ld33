@@ -41,10 +41,11 @@ VelBullet::VelBullet(string path, float speed, FPoint dir, FPoint start, bool hi
     Bullet(path, start, hit_monster), speed(speed), dir(dir) { }
 
 void VelBullet::update(const sf::Time &dt) {
-    FPoint dv = dir.normalize() * speed * dt.asSeconds();
-    //bounds->move(dv.x, dv.y);
-    pos = pos + dv;
+    pos = pos + vel(dt.asSeconds());
     bounds->set_pos(pos.x, pos.y);
+}
+FPoint VelBullet::vel(float dt) const {
+    return dir.normalize() * speed * dt;
 }
 
 FunBullet::FunBullet(string path, float speed, FPoint start, function<float(float)> xf,

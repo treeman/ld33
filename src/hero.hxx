@@ -28,6 +28,7 @@ public:
     bool is_collision(shared_ptr<BaseBounds> b);
 
     Circle proximity_bound;
+    Rect proximity_rect;
 
     sf::Sprite spr;
     FPoint move_dir;

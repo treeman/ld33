@@ -40,6 +40,7 @@ public:
 
     float speed;
     FPoint dir;
+    FPoint vel(float dt) const;
 };
 
 class FunBullet : public Bullet {

@@ -48,6 +48,18 @@ bool Rect::intersects_circle(Circle *c) {
            c->is_inside(orig.x + x,     orig.y + y + w) ||
            c->is_inside(orig.x + x + w, orig.y + y + w);
 }
+bool Rect::intersects(FLineSegment l) {
+    // top left, top right, bottom left, bottom right
+    FPoint tl(orig.x + x,     orig.y + y);
+    FPoint tr(orig.x + x + w, orig.y + y);
+    FPoint bl(orig.x + x,     orig.y + y + h);
+    FPoint br(orig.x + x + w, orig.y + y + h);
+    if (l.intersect(FLineSegment(tl, tr)).size() > 0) return true;
+    if (l.intersect(FLineSegment(tl, bl)).size() > 0) return true;
+    if (l.intersect(FLineSegment(bl, br)).size() > 0) return true;
+    if (l.intersect(FLineSegment(tr, br)).size() > 0) return true;
+    return false;
+}
 
 FPoint Rect::center() const {
     return FPoint(orig.x + w / 2, orig.y + h / 2);
@@ -112,8 +124,11 @@ void Bounds::draw(sf::RenderWindow &window) {
 }
 
 bool Bounds::intersects(shared_ptr<BaseBounds> b) {
+    return intersects(b.get());
+}
+bool Bounds::intersects(BaseBounds *b) {
     // Yeah it's slow. Meh :)
-    for (auto x : bounds) if (x->intersects(b.get())) return true;
+    for (auto x : bounds) if (x->intersects(b)) return true;
     return false;
 }
 
