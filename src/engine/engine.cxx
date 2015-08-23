@@ -94,9 +94,9 @@ void Engine::run() {
         state->draw();
 
         // Debugger logs and possibly draws last.
-        Locator::get_debug().tick();
-        Locator::get_shapedebug().draw(*window);
-        Locator::get_shapedebug().tick();
+        //Locator::get_debug().tick();
+        //Locator::get_shapedebug().draw(*window);
+        //Locator::get_shapedebug().tick();
 
         ss.str("");
         ss << (int)fps;
